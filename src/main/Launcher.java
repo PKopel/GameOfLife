@@ -18,16 +18,10 @@ public class Launcher {
         stayingAlive.add(3);
         Properties.getProperties().setGettingAlive(gettingAlive);
         Properties.getProperties().setStayingAlive(stayingAlive);
-        Board board = new Board();
-        board.addCell(new Position(1,1), new Cell(true));
-        board.addCell(new Position(1,2), new Cell(true));
-        board.addCell(new Position(1, 3), new Cell(true));
-        //board.addCell(new Position(2,2), new Cell(true));
-        AppView appView = new AppView(board);
-        appView.setTitle("Animal Evolution");
+        AppView appView = new AppView( new Board());
+        appView.setTitle("Game Of Life");
         appView.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        appView.setSize(300, 180);
+        appView.setSize(600, 600);
         appView.setVisible(true);
-        board.run();
     }
 }

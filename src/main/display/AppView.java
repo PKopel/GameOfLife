@@ -5,21 +5,26 @@ import main.logic.Observer;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class AppView extends JFrame implements Observer {
     private BoardView boardView;
-    private JButton stopButton = new JButton("STOP");
+    private final ExecutorService exec = Executors.newCachedThreadPool();
+    private JButton stopButton = new JButton("START");
 
     public AppView(Board board){
         this.boardView = new BoardView(board);
 
         board.addObserver(this);
-        stopButton.addActionListener(action -> {
+        stopButton.addActionListener(e -> {
             if (board.isRunning()){
                 board.setRunning(false);
+                stopButton.setText("START");
             } else {
                 board.setRunning(true);
-                board.run();
+                exec.execute(board);
+                stopButton.setText("STOP");
             }
         });
 
