@@ -6,7 +6,7 @@ import java.util.stream.Collectors;
 public class Board implements Runnable {
     private HashMap<Position, Cell> fields = new HashMap<>();
     private LinkedList<Observer> observers = new LinkedList<>();
-    private boolean running = true;
+    private boolean running = false;
 
     public boolean isRunning() {
         return running;
@@ -27,10 +27,6 @@ public class Board implements Runnable {
 
     public void addObserver(Observer observer) {
         observers.add(observer);
-    }
-
-    public boolean isEmpty() {
-        return fields.isEmpty();
     }
 
     public int countLivingNeighbours(Position position) {
@@ -67,7 +63,7 @@ public class Board implements Runnable {
             observers.forEach(Observer::change);
 
             try {
-                Thread.sleep(1000);
+                Thread.sleep(500);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
