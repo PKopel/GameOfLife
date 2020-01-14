@@ -4,10 +4,11 @@ import java.util.LinkedList;
 
 public class Properties {
     private static Properties properties = null;
-    private LinkedList<Integer> gettingAlive = null;
-    private LinkedList<Integer> stayingAlive = null;
+    private LinkedList<Integer> gettingAlive = new LinkedList<>();
+    private LinkedList<Integer> stayingAlive = new LinkedList<>();
 
-    private Properties(){}
+    private Properties() {
+    }
 
     public static Properties getProperties() {
         if (properties == null) {
@@ -16,20 +17,22 @@ public class Properties {
         return properties;
     }
 
+    public void parseRules(String rules) {
+        boolean part = false;
+        for (Character c : rules.toCharArray()) {
+            if (c == ':') part = true;
+            else {
+                if (part) stayingAlive.add(Integer.parseInt(String.valueOf(c)));
+                else gettingAlive.add(Integer.parseInt(String.valueOf(c)));
+            }
+        }
+    }
 
     public LinkedList<Integer> getStayingAlive() {
         return stayingAlive;
     }
 
-    public void setStayingAlive(LinkedList<Integer> stayingAlive) {
-        this.stayingAlive = stayingAlive;
-    }
-
     public LinkedList<Integer> getGettingAlive() {
         return gettingAlive;
-    }
-
-    public void setGettingAlive(LinkedList<Integer> gettingAlive) {
-        this.gettingAlive = gettingAlive;
     }
 }
