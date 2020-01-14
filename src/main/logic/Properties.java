@@ -18,9 +18,9 @@ public class Properties {
     }
 
     public void parseRules(String rules) {
-        boolean part = false;
+        boolean part = true;
         for (Character c : rules.toCharArray()) {
-            if (c == '/') part = true;
+            if (c == '/') part = false;
             else {
                 if (part) stayingAlive.add(Integer.parseInt(String.valueOf(c)));
                 else gettingAlive.add(Integer.parseInt(String.valueOf(c)));
