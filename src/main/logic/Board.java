@@ -31,6 +31,11 @@ public class Board implements Runnable {
         observers.forEach(Observer::change);
     }
 
+    public void removeCell(Position position) {
+        fields.remove(position);
+        observers.forEach(Observer::change);
+    }
+
     public void addObserver(Observer observer) {
         observers.add(observer);
     }

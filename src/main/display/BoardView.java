@@ -12,14 +12,15 @@ import java.awt.event.MouseEvent;
 public class BoardView extends JPanel {
     private Board board;
     private int cellSize = 20;
-    ;
 
     public BoardView(Board board) {
         this.board = board;
         this.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                board.addCell(new Position(e.getX() / cellSize, e.getY() / cellSize), new Cell(true));
+                Position position = new Position(e.getX() / cellSize, e.getY() / cellSize);
+                if (board.getCells().containsKey(position)) board.removeCell(position);
+                else board.addCell(position, new Cell(true));
             }
         });
     }
