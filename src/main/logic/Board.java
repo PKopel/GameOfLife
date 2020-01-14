@@ -1,6 +1,7 @@
 package main.logic;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.stream.Collectors;
 
 public class Board implements Runnable {
@@ -18,6 +19,11 @@ public class Board implements Runnable {
 
     public HashMap<Position, Cell> getCells() {
         return fields;
+    }
+
+    public void reset() {
+        fields.clear();
+        observers.forEach(Observer::change);
     }
 
     public void addCell(Position position, Cell cell) {
@@ -65,7 +71,7 @@ public class Board implements Runnable {
             try {
                 Thread.sleep(500);
             } catch (InterruptedException e) {
-                e.printStackTrace();
+                System.exit(0);
             }
         }
     }

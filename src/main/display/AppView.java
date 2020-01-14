@@ -13,6 +13,7 @@ public class AppView extends JFrame implements Observer {
     private BoardView boardView;
     private final ExecutorService exec = Executors.newCachedThreadPool();
     private JButton stopButton = new JButton("START");
+    private JButton resetButton = new JButton("RESET");
     private JButton exitButton = new JButton("EXIT");
     private JButton returnButton = new JButton("RETURN");
 
@@ -29,6 +30,10 @@ public class AppView extends JFrame implements Observer {
                 exec.execute(board);
                 stopButton.setText("STOP");
             }
+        });
+
+        this.resetButton.addActionListener(e -> {
+            board.reset();
         });
 
         this.exitButton.addActionListener(e -> {
@@ -48,6 +53,7 @@ public class AppView extends JFrame implements Observer {
         JPanel buttons = new JPanel();
         buttons.setLayout(new FlowLayout());
         buttons.add(stopButton);
+        buttons.add(resetButton);
         buttons.add(returnButton);
         buttons.add(exitButton);
 
