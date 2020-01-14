@@ -1,18 +1,15 @@
 package main;
 
-import main.display.AppView;
-import main.logic.Board;
-import main.logic.Properties;
+import main.display.Starter;
 
 import javax.swing.*;
 
 public class Launcher {
     public static void main(String[] args) {
-        Properties.getProperties().parseRules(args[0]);
-        AppView appView = new AppView(new Board());
-        appView.setTitle("Game Of Life");
-        appView.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        appView.setSize(600, 600);
-        appView.setVisible(true);
+        Starter starter = new Starter();
+        starter.setTitle("Game Of Life");
+        starter.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        starter.setSize(400, 100);
+        starter.setVisible(true);
     }
 }

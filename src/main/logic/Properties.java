@@ -20,7 +20,7 @@ public class Properties {
     public void parseRules(String rules) {
         boolean part = false;
         for (Character c : rules.toCharArray()) {
-            if (c == ':') part = true;
+            if (c == '/') part = true;
             else {
                 if (part) stayingAlive.add(Integer.parseInt(String.valueOf(c)));
                 else gettingAlive.add(Integer.parseInt(String.valueOf(c)));
