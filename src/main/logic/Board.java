@@ -8,6 +8,7 @@ public class Board implements Runnable {
     private HashMap<Position, Cell> fields = new HashMap<>();
     private LinkedList<Observer> observers = new LinkedList<>();
     private boolean running = false;
+    private int sleepTime = 500;
 
     public boolean isRunning() {
         return running;
@@ -15,6 +16,10 @@ public class Board implements Runnable {
 
     public void setRunning(boolean running) {
         this.running = running;
+    }
+
+    public void setSleepTime(int sleepTime) {
+        this.sleepTime = sleepTime;
     }
 
     public HashMap<Position, Cell> getCells() {
@@ -74,7 +79,7 @@ public class Board implements Runnable {
             observers.forEach(Observer::change);
 
             try {
-                Thread.sleep(500);
+                Thread.sleep(sleepTime);
             } catch (InterruptedException e) {
                 System.exit(0);
             }

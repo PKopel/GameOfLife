@@ -6,11 +6,12 @@ import main.logic.Position;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.event.MouseWheelEvent;
+import java.awt.event.MouseWheelListener;
 
-public class BoardView extends JPanel {
+public class BoardView extends JPanel implements MouseWheelListener, MouseListener {
     private Board board;
     private int cellSize = 20;
     private int shiftX = 0;
@@ -20,35 +21,8 @@ public class BoardView extends JPanel {
 
     public BoardView(Board board) {
         this.board = board;
-        this.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                Position position = new Position((e.getX() - shiftX) / cellSize, (e.getY() - shiftY) / cellSize);
-                if (board.getCells().containsKey(position)) board.removeCell(position);
-                else board.addCell(position, new Cell(true));
-            }
-
-            @Override
-            public void mousePressed(MouseEvent e) {
-                previousMouseX = e.getX();
-                previousMouseY = e.getY();
-            }
-
-            @Override
-            public void mouseReleased(MouseEvent e) {
-                shiftX += e.getX() - previousMouseX;
-                shiftY += e.getY() - previousMouseY;
-                repaint();
-            }
-
-            @Override
-            public void mouseWheelMoved(MouseWheelEvent e) {
-                cellSize += e.getWheelRotation();
-                if (cellSize < 10) cellSize = 10;
-                else if (cellSize > 40) cellSize = 40;
-                repaint();
-            }
-        });
+        addMouseListener(this);
+        addMouseWheelListener(this);
     }
 
     @Override
@@ -69,5 +43,43 @@ public class BoardView extends JPanel {
             if (entry.getValue().isAlive())
                 g.fillRect(entry.getKey().x * cellSize + shiftX, entry.getKey().y * cellSize + shiftY, cellSize, cellSize);
         });
+    }
+
+    @Override
+    public void mouseClicked(MouseEvent e) {
+        Position position = new Position((e.getX() - shiftX) / cellSize, (e.getY() - shiftY) / cellSize);
+        if (board.getCells().containsKey(position)) board.removeCell(position);
+        else board.addCell(position, new Cell(true));
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+        previousMouseX = e.getX();
+        previousMouseY = e.getY();
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+        shiftX += e.getX() - previousMouseX;
+        shiftY += e.getY() - previousMouseY;
+        repaint();
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseWheelMoved(MouseWheelEvent e) {
+        cellSize += e.getWheelRotation();
+        if (cellSize < 10) cellSize = 10;
+        else if (cellSize > 40) cellSize = 40;
+        repaint();
     }
 }

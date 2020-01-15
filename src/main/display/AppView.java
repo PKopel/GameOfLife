@@ -4,6 +4,7 @@ import main.logic.Board;
 import main.logic.Observer;
 
 import javax.swing.*;
+import javax.swing.border.TitledBorder;
 import java.awt.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -16,12 +17,14 @@ public class AppView extends JFrame implements Observer {
     private JButton resetButton = new JButton("RESET");
     private JButton exitButton = new JButton("EXIT");
     private JButton returnButton = new JButton("RETURN");
+    private JSlider sleepTime = new JSlider(100, 1000);
 
     public AppView(Board board) {
         this.boardView = new BoardView(board);
 
         board.addObserver(this);
-        stopButton.addActionListener(e -> {
+
+        this.stopButton.addActionListener(e -> {
             if (board.isRunning()) {
                 board.setRunning(false);
                 stopButton.setText("START");
@@ -50,15 +53,22 @@ public class AppView extends JFrame implements Observer {
             dispose();
         });
 
-        JPanel buttons = new JPanel();
-        buttons.setLayout(new FlowLayout());
-        buttons.add(stopButton);
-        buttons.add(resetButton);
-        buttons.add(returnButton);
-        buttons.add(exitButton);
+        this.sleepTime.addChangeListener(e ->
+                board.setSleepTime(sleepTime.getValue())
+        );
+
+        this.sleepTime.setBorder(new TitledBorder("FRAME LENGTH"));
+
+        JPanel controls = new JPanel();
+        controls.setLayout(new FlowLayout());
+        controls.add(sleepTime);
+        controls.add(stopButton);
+        controls.add(resetButton);
+        controls.add(returnButton);
+        controls.add(exitButton);
 
         this.add(boardView);
-        this.add(BorderLayout.SOUTH, buttons);
+        this.add(BorderLayout.SOUTH, controls);
     }
 
     @Override
