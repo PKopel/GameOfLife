@@ -2,27 +2,14 @@ package main.logic;
 
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
 public class Board implements Runnable {
-    private HashMap<Position, Cell> fields = new HashMap<>();
+    private ConcurrentHashMap<Position, Cell> fields = new ConcurrentHashMap<>();
     private LinkedList<Observer> observers = new LinkedList<>();
-    private boolean running = false;
-    private int sleepTime = 500;
 
-    public boolean isRunning() {
-        return running;
-    }
-
-    public void setRunning(boolean running) {
-        this.running = running;
-    }
-
-    public void setSleepTime(int sleepTime) {
-        this.sleepTime = sleepTime;
-    }
-
-    public HashMap<Position, Cell> getCells() {
+    public ConcurrentHashMap<Position, Cell> getCells() {
         return fields;
     }
 
@@ -56,34 +43,26 @@ public class Board implements Runnable {
 
     @Override
     public void run() {
-        while (!Thread.interrupted() && running) {
-            HashMap<Position, Cell> tmp = new HashMap<>();
-            fields.keySet().forEach(position -> {
-                this.fields.get(position).setLivingNeighbours(this.countLivingNeighbours(position));
-                for (Neighbours n : Neighbours.values()) {
-                    Position newPosition = n.nextPosition(position);
-                    if (!this.fields.containsKey(newPosition)) {
-                        Cell newCell = new Cell(false);
-                        newCell.setLivingNeighbours(this.countLivingNeighbours(newPosition));
-                        tmp.put(newPosition, newCell);
-                    }
+        HashMap<Position, Cell> tmp = new HashMap<>();
+        fields.keySet().forEach(position -> {
+            this.fields.get(position).setLivingNeighbours(this.countLivingNeighbours(position));
+            for (Neighbours n : Neighbours.values()) {
+                Position newPosition = n.nextPosition(position);
+                if (!this.fields.containsKey(newPosition)) {
+                    Cell newCell = new Cell(false);
+                    newCell.setLivingNeighbours(this.countLivingNeighbours(newPosition));
+                    tmp.put(newPosition, newCell);
                 }
-            });
-
-            fields.putAll(tmp);
-
-            fields.values().forEach(Cell::updateStatus);
-
-            fields.keySet().stream().filter(position -> !this.fields.get(position).isAlive()).collect(Collectors.toList()).forEach(fields::remove);
-
-            observers.forEach(Observer::change);
-
-            try {
-                Thread.sleep(sleepTime);
-            } catch (InterruptedException e) {
-                System.exit(0);
             }
-        }
+        });
+
+        fields.putAll(tmp);
+
+        fields.values().forEach(Cell::updateStatus);
+
+        fields.keySet().stream().filter(position -> !this.fields.get(position).isAlive()).collect(Collectors.toList()).forEach(fields::remove);
+
+        observers.forEach(Observer::change);
     }
 
     @Override

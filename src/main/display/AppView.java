@@ -6,18 +6,22 @@ import main.logic.Observer;
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
 import java.awt.*;
-import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ScheduledFuture;
+import java.util.concurrent.TimeUnit;
 
 @SuppressWarnings("FieldCanBeLocal")
 public class AppView extends JFrame implements Observer {
     private BoardView boardView;
-    private final ExecutorService exec = Executors.newCachedThreadPool();
+    private final ScheduledExecutorService exec = Executors.newScheduledThreadPool(1);
     private JButton stopButton = new JButton("START");
     private JButton resetButton = new JButton("RESET");
     private JButton exitButton = new JButton("EXIT");
     private JButton returnButton = new JButton("RETURN");
     private JSlider sleepTime = new JSlider(100, 1000);
+    private ScheduledFuture<?> runningBoard = null;
+    private boolean running = false;
 
     public AppView(Board board) {
         this.boardView = new BoardView(board);
@@ -25,12 +29,13 @@ public class AppView extends JFrame implements Observer {
         board.addObserver(this);
 
         this.stopButton.addActionListener(e -> {
-            if (board.isRunning()) {
-                board.setRunning(false);
+            if (running) {
+                running = false;
+                runningBoard.cancel(false);
                 stopButton.setText("START");
             } else {
-                board.setRunning(true);
-                exec.execute(board);
+                running = true;
+                runningBoard = exec.scheduleAtFixedRate(board, 0, sleepTime.getValue(), TimeUnit.MILLISECONDS);
                 stopButton.setText("STOP");
             }
         });
@@ -53,8 +58,10 @@ public class AppView extends JFrame implements Observer {
             dispose();
         });
 
-        this.sleepTime.addChangeListener(e ->
-                board.setSleepTime(sleepTime.getValue())
+        this.sleepTime.addChangeListener(e -> {
+                    runningBoard.cancel(false);
+                    runningBoard = exec.scheduleAtFixedRate(board, sleepTime.getValue(), sleepTime.getValue(), TimeUnit.MILLISECONDS);
+                }
         );
 
         this.sleepTime.setBorder(new TitledBorder("FRAME LENGTH"));
