@@ -39,9 +39,9 @@ public class BoardView extends JPanel implements MouseWheelListener, MouseListen
             g.drawLine(0, horizontal, this.getWidth(), horizontal);
             horizontal += cellSize;
         }
-        board.getCells().entrySet().forEach(entry -> {
-            if (entry.getValue().isAlive())
-                g.fillRect(entry.getKey().x * cellSize + shiftX, entry.getKey().y * cellSize + shiftY, cellSize, cellSize);
+        board.getCells().forEach((key, value) -> {
+            if (value.isAlive())
+                g.fillRect(key.x * cellSize + shiftX, key.y * cellSize + shiftY, cellSize, cellSize);
         });
     }
 
