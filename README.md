@@ -1,8 +1,11 @@
 # GameOfLife
-##[Rules description (Wikipedia)](https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life)
 
-##User manual
+## [Rules description (Wikipedia)](https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life)
 
-####Click on a cell to change its status.
-####Drag mouse over the board to move it.
-####Scroll to zoom in or out. 
+## User manual
+
+#### Click on a cell to change its status.
+
+#### Drag mouse over the board to move it.
+
+#### Scroll to zoom in or out. 
