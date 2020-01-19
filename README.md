@@ -6,6 +6,6 @@
 
 #### Click on a cell to change its status.
 
-#### Drag mouse over the board to move it.
+#### Drag the board to move it.
 
 #### Scroll to zoom in or out. 
