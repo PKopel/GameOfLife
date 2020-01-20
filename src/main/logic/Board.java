@@ -63,6 +63,7 @@ public class Board implements Runnable {
         fields.keySet().stream().filter(position -> !this.fields.get(position).isAlive()).collect(Collectors.toList()).forEach(fields::remove);
 
         observers.forEach(Observer::change);
+        Thread.yield();
     }
 
     @Override

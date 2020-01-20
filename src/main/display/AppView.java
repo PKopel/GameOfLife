@@ -40,9 +40,7 @@ public class AppView extends JFrame implements Observer {
             }
         });
 
-        this.resetButton.addActionListener(e -> {
-            board.reset();
-        });
+        this.resetButton.addActionListener(e -> board.reset());
 
         this.exitButton.addActionListener(e -> {
             exec.shutdownNow();
@@ -64,7 +62,7 @@ public class AppView extends JFrame implements Observer {
                 }
         );
 
-        this.sleepTime.setBorder(new TitledBorder("FRAME LENGTH"));
+        this.sleepTime.setBorder(new TitledBorder("ANIMATION SPEED"));
 
         JPanel controls = new JPanel();
         controls.setLayout(new FlowLayout());
