@@ -4,8 +4,8 @@ import java.util.LinkedList;
 
 public class Properties {
     private static Properties properties = null;
-    private LinkedList<Integer> gettingAlive = new LinkedList<>();
-    private LinkedList<Integer> stayingAlive = new LinkedList<>();
+    private final LinkedList<Integer> gettingAlive = new LinkedList<>();
+    private final LinkedList<Integer> stayingAlive = new LinkedList<>();
 
     private Properties() {
     }

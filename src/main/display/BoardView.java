@@ -12,7 +12,7 @@ import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
 
 public class BoardView extends JPanel implements MouseWheelListener, MouseListener {
-    private Board board;
+    private final Board board;
     private int cellSize = 20;
     private int shiftX = 0;
     private int shiftY = 0;

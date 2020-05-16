@@ -6,8 +6,8 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
 public class Board implements Runnable {
-    private ConcurrentHashMap<Position, Cell> fields = new ConcurrentHashMap<>();
-    private LinkedList<Observer> observers = new LinkedList<>();
+    private final ConcurrentHashMap<Position, Cell> fields = new ConcurrentHashMap<>();
+    private final LinkedList<Observer> observers = new LinkedList<>();
 
     public ConcurrentHashMap<Position, Cell> getCells() {
         return fields;

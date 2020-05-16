@@ -7,10 +7,11 @@ import javax.swing.*;
 import javax.swing.border.TitledBorder;
 import java.awt.*;
 
+@SuppressWarnings("FieldCanBeLocal")
 public class Starter extends JFrame {
-    private JTextField rules = new JTextField();
-    private JButton create = new JButton("CREATE");
-    private JButton exit = new JButton("EXIT");
+    private final JTextField rules = new JTextField();
+    private final JButton create = new JButton("CREATE");
+    private final JButton exit = new JButton("EXIT");
 
     public Starter() {
         this.create.addActionListener(e -> {
@@ -24,9 +25,7 @@ public class Starter extends JFrame {
             dispose();
         });
 
-        this.exit.addActionListener(e -> {
-            dispose();
-        });
+        this.exit.addActionListener(e -> dispose());
 
         this.rules.setBorder(new TitledBorder("RULES"));
         this.add(BorderLayout.NORTH, rules);

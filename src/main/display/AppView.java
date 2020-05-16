@@ -13,13 +13,13 @@ import java.util.concurrent.TimeUnit;
 
 @SuppressWarnings("FieldCanBeLocal")
 public class AppView extends JFrame implements Observer {
-    private BoardView boardView;
+    private final BoardView boardView;
     private final ScheduledExecutorService exec = Executors.newScheduledThreadPool(1);
-    private JButton stopButton = new JButton("START");
-    private JButton resetButton = new JButton("RESET");
-    private JButton exitButton = new JButton("EXIT");
-    private JButton returnButton = new JButton("RETURN");
-    private JSlider sleepTime = new JSlider(100, 1000);
+    private final JButton stopButton = new JButton("START");
+    private final JButton resetButton = new JButton("RESET");
+    private final JButton exitButton = new JButton("EXIT");
+    private final JButton returnButton = new JButton("RETURN");
+    private final JSlider sleepTime = new JSlider(100, 1000);
     private ScheduledFuture<?> runningBoard = null;
     private boolean running = false;
 
