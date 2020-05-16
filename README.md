@@ -4,8 +4,12 @@
 
 ## User manual
 
-#### Click on a cell to change its status.
+1) Click on a cell to change its status.
 
-#### Drag the board to move it.
+2) Drag the board to move it.
 
-#### Scroll to zoom in or out. 
+3) Scroll to zoom in or out.
+
+### Author
+* **[Paweł Kopel](https://github.com/PKopel)**
+
